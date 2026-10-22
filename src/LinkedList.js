@@ -2,37 +2,36 @@ import { Node } from "./Node.js";
 
 export class LinkedList {
   #head = null;
+  #size = 0;
 
   append(value) {
     const node = new Node(value, null);
 
     if (!this.#head) {
       this.#head = node;
-      return;
+    } else {
+      let curr = this.#head;
+      while (curr.nextNode != null) {
+        curr = curr.nextNode;
+      }
+      curr.nextNode = node;
     }
 
-    let curr = this.#head;
-    while (curr.nextNode != null) {
-      curr = curr.nextNode;
-    }
-    curr.nextNode = node;
+    this.#size++;
   }
 
   prepend(value) {
     const node = new Node(value, this.#head);
-    this.#head ? (this.#head = node) : this.append(value);
+    if (this.#head) {
+      this.#head = node;
+      this.#size++;
+    } else {
+      this.append(value);
+    }
   }
 
   size() {
-    let curr = this.#head;
-    let count = 0;
-
-    while (curr != null) {
-      curr = curr.nextNode;
-      count++;
-    }
-
-    return count;
+    return this.#size;
   }
 
   // will be renamed later to head()
@@ -41,7 +40,7 @@ export class LinkedList {
   }
 
   tail() {
-    if (this.size() === 0) return undefined;
+    if (this.#size === 0) return undefined;
     let curr = this.#head;
 
     while (curr.nextNode != null) {
@@ -68,6 +67,7 @@ export class LinkedList {
 
     const tmpHead = this.#head;
     this.#head = this.#head.nextNode;
+    this.#size--;
     return tmpHead;
   }
 
@@ -107,5 +107,35 @@ export class LinkedList {
     resultString += "null";
 
     return resultString;
+  }
+
+  insertAt(index, ...values) {
+    if (index >= this.#size || index < 0)
+      throw RangeError("Index out of range");
+
+    if (index === 0) {
+      values.forEach((value) => this.prepend(value));
+      return;
+    }
+
+    if (index === this.#size - 1) {
+      values.forEach((value) => this.append(value));
+      return;
+    }
+
+    let beforePrev = null; // pointer `1
+    let prev = null; // pointer 2
+    let curr = this.#head; // pointer 3
+
+    for (let i = 0; i < index; i++) {
+      [beforePrev, prev, curr] = [prev, curr, curr.nextNode];
+    }
+    values.forEach((value) => {
+      const node = new Node(value, curr);
+      [beforePrev, prev] = [prev, node];
+      beforePrev.nextNode = prev; // keep referencing at prev so it doesn't get garbage collected
+
+      this.#size++;
+    });
   }
 }
