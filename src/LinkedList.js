@@ -13,4 +13,15 @@ export class LinkedList {
     this.head ? (this.head = node) : this.append(value);
   }
 
+  size() {
+    let curr = this.head;
+    let count = 0;
+
+    while (curr != null) {
+      curr = curr.nextNode;
+      count++;
+    }
+
+    return count;
+  }
 }
