@@ -35,7 +35,7 @@ export class LinkedList {
   }
 
   head() {
-    return this.#head.value || undefined;
+    return this.#head ? this.#head.value : undefined;
   }
 
   tail() {
