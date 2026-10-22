@@ -22,11 +22,11 @@ export class LinkedList {
 
   prepend(value) {
     const node = new Node(value, this.#head);
-    if (this.#head) {
+    if (!this.#head) {
+      this.append(value);
+    } else {
       this.#head = node;
       this.#size++;
-    } else {
-      this.append(value);
     }
   }
 
@@ -39,7 +39,7 @@ export class LinkedList {
   }
 
   tail() {
-    if (this.#size === 0) return undefined;
+    if (this.#size === 0) return;
 
     let curr = this.#head;
     while (curr.nextNode != null) {
@@ -98,7 +98,6 @@ export class LinkedList {
       curr = curr.nextNode;
     }
     resultString += "null";
-
     return resultString;
   }
 
@@ -106,27 +105,26 @@ export class LinkedList {
     if (index > this.#size || index < 0) throw RangeError("Index out of range");
 
     if (index === 0) {
-      // if the index is 0 prepend in reversed order
+      // if the index is 0 then prepend values in reversed order
       for (let i = values.length - 1; i >= 0; i--) {
         this.prepend(values[i]);
       }
       return;
     }
 
-    if (index === this.#size - 1) {
+    if (index === this.#size) {
       values.forEach((value) => this.append(value));
       return;
     }
 
     let curr = this.#head;
-
     for (let i = 0; i < index - 1; i++) {
       curr = curr.nextNode;
     }
+
     values.forEach((value) => {
-      const node = new Node(value, curr.nextNode);
       let prev = curr;
-      curr = node;
+      curr = new Node(value, curr.nextNode);
       prev.nextNode = curr;
       this.#size++;
     });
