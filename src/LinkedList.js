@@ -7,4 +7,10 @@ export class LinkedList {
     const node = new Node(value, null);
     this.head ? (this.head.nextNode = node) : (this.head = node);
   }
+
+  prepend(value) {
+    const node = new Node(value, this.head);
+    this.head ? (this.head = node) : this.append(value);
+  }
+
 }
