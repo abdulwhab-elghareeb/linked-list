@@ -5,7 +5,17 @@ export class LinkedList {
 
   append(value) {
     const node = new Node(value, null);
-    this.head ? (this.head.nextNode = node) : (this.head = node);
+
+    if (!this.head) {
+      this.head = node;
+      return;
+    }
+
+    let curr = this.head;
+    while (curr.nextNode != null) {
+      curr = curr.nextNode;
+    }
+    curr.nextNode = node;
   }
 
   prepend(value) {
@@ -25,17 +35,30 @@ export class LinkedList {
     return count;
   }
 
-  getHead() { // will be renamed later to head()
-    return this.head || undefined
+  // will be renamed later to head()
+  getHead() {
+    return this.head || undefined;
   }
 
-  tail(){
-    if(this.size() === 0) return undefined
-    let curr = this.head
+  tail() {
+    if (this.size() === 0) return undefined;
+    let curr = this.head;
 
-    while(true){
-      if(curr.nextNode === null) return curr
-      curr = curr.nextNode
+    while (curr.nextNode != null) {
+      curr = curr.nextNode;
     }
+
+    return curr;
+  }
+
+  at(index) {
+    if (index < 0) return;
+
+    let curr = this.head;
+    for (let i = 0; i < index; i++) {
+      curr = curr.nextNode;
+      if (curr === null) return;
+    }
+    return curr;
   }
 }
