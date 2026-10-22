@@ -61,4 +61,12 @@ export class LinkedList {
     }
     return curr;
   }
+
+  pop() {
+    if (!this.head) return;
+
+    const tmpHead = this.head;
+    this.head = this.head.nextNode;
+    return tmpHead;
+  }
 }
