@@ -2,4 +2,9 @@ import { Node } from "./Node.js";
 
 export class LinkedList {
   head = null;
+
+  append(value) {
+    const node = new Node(value, null);
+    this.head ? (this.head.nextNode = node) : (this.head = node);
+  }
 }
