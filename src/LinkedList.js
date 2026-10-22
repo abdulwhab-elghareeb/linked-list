@@ -28,4 +28,14 @@ export class LinkedList {
   getHead() { // will be renamed later to head()
     return this.head || undefined
   }
+
+  tail(){
+    if(this.size() === 0) return undefined
+    let curr = this.head
+
+    while(true){
+      if(curr.nextNode === null) return curr
+      curr = curr.nextNode
+    }
+  }
 }
