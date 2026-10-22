@@ -138,4 +138,17 @@ export class LinkedList {
       this.#size++;
     });
   }
+
+  removeAt(index) {
+    if (index >= this.#size || index < 0)
+      throw RangeError("Index out of range");
+
+    let prev = null;
+    let curr = this.#head;
+    for (let i = 0; i <= index - 1; i++) {
+      [prev, curr] = [curr, curr.nextNode];
+    }
+    prev.nextNode = curr.nextNode; // cut the reference
+    this.#size--;
+  }
 }
