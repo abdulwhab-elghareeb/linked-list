@@ -24,4 +24,8 @@ export class LinkedList {
 
     return count;
   }
+
+  getHead() { // will be renamed later to head()
+    return this.head || undefined
+  }
 }
