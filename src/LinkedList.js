@@ -11,7 +11,7 @@ export class LinkedList {
       this.#head = node;
     } else {
       let curr = this.#head;
-      while (curr.nextNode != null) {
+      while (curr.nextNode) {
         curr = curr.nextNode;
       }
       curr.nextNode = node;
@@ -21,13 +21,8 @@ export class LinkedList {
   }
 
   prepend(value) {
-    const node = new Node(value, this.#head);
-    if (!this.#head) {
-      this.append(value);
-    } else {
-      this.#head = node;
-      this.#size++;
-    }
+    this.#head = new Node(value, this.#head);
+    this.#size++;
   }
 
   size() {
@@ -42,7 +37,7 @@ export class LinkedList {
     if (this.#size === 0) return;
 
     let curr = this.#head;
-    while (curr.nextNode != null) {
+    while (curr.nextNode) {
       curr = curr.nextNode;
     }
     return curr.value;
@@ -61,15 +56,15 @@ export class LinkedList {
   pop() {
     if (!this.#head) return;
 
-    const tmpHead = this.#head;
+    const tempHead = this.#head;
     this.#head = this.#head.nextNode;
     this.#size--;
-    return tmpHead.value;
+    return tempHead.value;
   }
 
   contains(value) {
     let curr = this.#head;
-    while (curr != null) {
+    while (curr) {
       if (curr.value === value) return true;
       curr = curr.nextNode;
     }
@@ -80,7 +75,7 @@ export class LinkedList {
     let curr = this.#head;
     let currentIndex = 0;
 
-    while (curr != null) {
+    while (curr) {
       if (curr.value === value) return currentIndex;
       curr = curr.nextNode;
       currentIndex++;
@@ -93,7 +88,7 @@ export class LinkedList {
     let curr = this.#head;
     let resultString = "";
 
-    while (curr != null) {
+    while (curr) {
       resultString += `( ${curr.value} ) -> `;
       curr = curr.nextNode;
     }
@@ -118,6 +113,7 @@ export class LinkedList {
     }
 
     let curr = this.#head;
+    // stopping in index - 1 so we can link the new node with the one before it
     for (let i = 0; i < index - 1; i++) {
       curr = curr.nextNode;
     }
@@ -138,7 +134,6 @@ export class LinkedList {
       this.#head = this.#head.nextNode;
     } else {
       let curr = this.#head;
-      // stop before the index by 1
       for (let i = 0; i < index - 1; i++) {
         curr = curr.nextNode;
       }
