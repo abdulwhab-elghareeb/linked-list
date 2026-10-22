@@ -1,17 +1,17 @@
 import { Node } from "./Node.js";
 
 export class LinkedList {
-  head = null;
+  #head = null;
 
   append(value) {
     const node = new Node(value, null);
 
-    if (!this.head) {
-      this.head = node;
+    if (!this.#head) {
+      this.#head = node;
       return;
     }
 
-    let curr = this.head;
+    let curr = this.#head;
     while (curr.nextNode != null) {
       curr = curr.nextNode;
     }
@@ -19,12 +19,12 @@ export class LinkedList {
   }
 
   prepend(value) {
-    const node = new Node(value, this.head);
-    this.head ? (this.head = node) : this.append(value);
+    const node = new Node(value, this.#head);
+    this.#head ? (this.#head = node) : this.append(value);
   }
 
   size() {
-    let curr = this.head;
+    let curr = this.#head;
     let count = 0;
 
     while (curr != null) {
@@ -36,13 +36,13 @@ export class LinkedList {
   }
 
   // will be renamed later to head()
-  getHead() {
-    return this.head || undefined;
+  head() {
+    return this.#head.value || undefined;
   }
 
   tail() {
     if (this.size() === 0) return undefined;
-    let curr = this.head;
+    let curr = this.#head;
 
     while (curr.nextNode != null) {
       curr = curr.nextNode;
@@ -53,7 +53,7 @@ export class LinkedList {
 
   at(index) {
     if (index < 0) return;
-    let curr = this.head;
+    let curr = this.#head;
 
     for (let i = 0; i < index; i++) {
       curr = curr.nextNode;
@@ -64,15 +64,15 @@ export class LinkedList {
   }
 
   pop() {
-    if (!this.head) return;
+    if (!this.#head) return;
 
-    const tmpHead = this.head;
-    this.head = this.head.nextNode;
+    const tmpHead = this.#head;
+    this.#head = this.#head.nextNode;
     return tmpHead;
   }
 
   contains(value) {
-    let curr = this.head;
+    let curr = this.#head;
 
     while (curr != null) {
       if (curr.value === value) return true;
@@ -83,7 +83,7 @@ export class LinkedList {
   }
 
   findIndex(value) {
-    let curr = this.head;
+    let curr = this.#head;
     let currentIndex = 0;
 
     while (curr != null) {
@@ -96,8 +96,8 @@ export class LinkedList {
   }
 
   toString() {
-    if (!this.head) return "";
-    let curr = this.head;
+    if (!this.#head) return "";
+    let curr = this.#head;
     let resultString = "";
 
     while (curr != null) {
